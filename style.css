@@ -5,14 +5,108 @@
   box-sizing: border-box;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+
+  /* Set font size for easy rem calculations
+   * default document font size = 16px, 1rem = 16px, 100% = 16px
+   * (100% / 16px) * 10 = 62.5%, 1rem = 10px, 62.5% = 10px
+  */
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+}
+
+/* A few media query to set some font sizes at different screen sizes.
+ * This helps automate a bit of responsiveness.
+ * The trick is to use the rem unit for size values, margin and padding.
+ * Because rem is relative to the document font size
+ * when we scale up or down the font size on the document
+ * it will affect all properties using rem units for the values.
+*/
+
+/* I am using the em unit for breakpoints
+ * The calculation is the following
+ * screen size divided by browser base font size
+ * As an example: a breakpoint at 980px
+ * 980px / 16px = 61.25em
+*/
+
+/* 1200px / 16px = 75em */
+@media (max-width: 75em) {
+  html {
+    font-size: 60%;
+  }
+}
+
+/* 980px / 16px = 61.25em */
+@media (max-width: 61.25em) {
+  html {
+    font-size: 58%;
+  }
+}
+
+/* 460px / 16px = 28.75em */
+@media (max-width: 28.75em) {
+  html {
+    font-size: 55%;
+  }
+}
+
+
 .body-container {
   display: grid;
   grid-template-columns: 1fr;
 }
+
+.nav {
+  display: flex;
+  justify-content: flex-end;
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.4);
+}
+
+.nav-list {
+  display: flex;
+  margin-right: 1rem;
+  list-style-type: none;
+}
+
+@media (max-width: 28.75em) {
+  .nav {
+    justify-content: center;
+  }
+
+  .nav-list {
+    margin: 0 1rem; 
+  }
+}
+
+.nav-list a {
+  display: block;
+  font-size: 2.2rem;
+  padding: 2rem;
+  text-decoration: none;
+  color: #fff;
+}
+
+.nav-list a:hover {
+  color: #000000;
+  cursor: pointer;
+}
+
 .header {
   display: flex;
   flex-flow: column wrap;
-  font-family: helvetica;
+  font-family: montserrat, sans-serif;
 }
 
 .title-wrapper {
@@ -23,62 +117,68 @@
   align-items: center;
 }
   
-.text span {
-  font-size: 60px;
+.title-text span {
+  font-size: 8rem;
   padding: 0 10px;
   text-transform: uppercase;
-  color: #475c42;
-  animation: zoomup 2s linear infinite;
-  animation-delay: calc(200ms * var(--i));
+  color: #fff;
+  animation: zoomup 3.3s linear infinite;
+  animation-delay: calc(300ms * var(--i));
 }
 
 @keyframes zoomup {
   0%,
   100% {
-    color: #07f507;
+    color: #000000;
     filter: blur(1px);
-    text-shadow: 0 0 10px #07f507, 0 0 20px #07f507, 0 0 30px #07f507,
-    0 0 40px #07f507, 0 0 60px #07f507, 0 0 80px #07f507, 0 0 100px #07f507,
-    0 0 120px #07f507;
+    text-shadow: 0 0 10px #f5a207, 0 0 20px #f5a207, 0 0 30px #f5a207,
+    0 0 40px #f5a207, 0 0 60px #f5a207, 0 0 80px #f5a207, 0 0 100px #f5a207,
+    0 0 120px #f5a207;
   }
   
   5%,
   95% {
     filter: blur(0);
-    color: #475c42;
+    color: #ffffff;
     text-shadow: none;
   }
 }
 
 .neo-quote {
   padding: 30px 80px;
-  font-family: Arial,S Helvetica, sans-serif;
+  font-family: montserrat, sans-serif;
   color: #000000;
+  font-size: 2rem;
   text-align: justify;
   font-style: italic;
+  text-shadow: 0 0 2px #ffffff, 0 0 5px #ffffff, 0 0 9px #ffffff;
 }
 
-.banner {
+.banner-image, .intro-image {
   max-width: 100%;
   height: auto;
 }
 
 .intro {
   display: grid;
-  grid-gap: 10px;
-  grid-template-columns: 1fr;
-  border: 2px solid #07f507;
-  border-radius: 10px;
-  background-color: rgb(210, 247, 199);
+  grid-template-columns: 1fr 1fr;
+  justify-content: center;
+  align-items: center;
 }
 
 .intro-text {
-    padding: 20px;
-    font-family: Arial, Helvetica, sans-serif;
-    text-align: justify;
+  padding: 2rem;
+  font-family: montserrat, sans-serif;
+  font-size: 2rem;
+  text-shadow: 0 0 2px #000000, 0 0 3px #000000, 0 0 5px #000000;
+  text-align: justify;
+  line-height: 4rem;
+  color: #fff;
 
 }
 
+
+/*background color shading*/
 .green {
   background: #56B870; /* Old browsers */
   background: -moz-linear-gradient(top, #56B870 0%, #a5c956 100%); /* FF3.6+ */
@@ -89,14 +189,24 @@
   background: linear-gradient(top, #56B870 0%,#a5c956 100%); /* W3C */
 }
 
+.brown {
+  background: #ff9C7D; /* Old browsers */
+  background: -moz-linear-gradient(top, #ff9C7D 0%, #74321E 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff9C7D), color-stop(100%,#74321E)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #ff9C7D 0%,#74321E 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #ff9C7D 0%,#74321E 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #ff9C7D 0%,#74321E 100%); /* IE10+ */
+  background: linear-gradient(top, #ff9C7D 0%,#74321E 100%); /* W3C */
+}
+
 .off-white {
-  background: #d4ffe0; /* Old browsers */
-  background: -moz-linear-gradient(top, #d4ffe0 0%, #ccd4b9 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#d4ffe0), color-stop(100%,#ccd4b9)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, #d4ffe0 0%,#ccd4b9 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, #d4ffe0 0%,#ccd4b9 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, #d4ffe0 0%,#ccd4b9 100%); /* IE10+ */
-  background: linear-gradient(top, #d4ffe0 0%,#ccd4b9 100%); /* W3C */
+  background: #FFD5C8; /* Old browsers */
+  background: -moz-linear-gradient(top, #FFD5C8 0%, #ccd4b9 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFD5C8), color-stop(100%,#ccd4b9)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #FFD5C8 0%,#ccd4b9 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #FFD5C8 0%,#ccd4b9 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #FFD5C8 0%,#ccd4b9 100%); /* IE10+ */
+  background: linear-gradient(top, #FFD5C8 0%,#ccd4b9 100%); /* W3C */
 }
 
 
