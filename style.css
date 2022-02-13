@@ -164,18 +164,17 @@ img {
   margin-right: auto;
 }
 
-.intro {
+.main-container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template: auto auto auto / 1fr 1fr;
   justify-content: center;
   align-items: center;
 }
 
-.intro-text {
+.text {
   padding: 2rem;
   font-family: Barlow, sans-serif;
   font-size: 2rem;
-  /*text-shadow: 0 0 2px #000000, 0 0 3px #000000, 0 0 5px #000000;*/
   text-align: justify;
   line-height: 4rem;
   color: #fff;
